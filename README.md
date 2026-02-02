@@ -26,15 +26,6 @@ A modern, luxury-style business landing page built with **React** and **Tailwind
 - **Framer Motion (Animations)**
 - **Vite (Build Tool)**
 
-
----
-
-### 2️⃣ Navigate to Project Folder
-
-```
-cd luxe-landing-page
-```
-
 ---
 
 
