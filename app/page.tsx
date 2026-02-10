@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Menu, X, ArrowRight, Clock, Watch, Home } from 'lucide-react';
+import { Menu, X, ArrowRight, Clock, Watch } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 
