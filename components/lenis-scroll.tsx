@@ -1,42 +1,53 @@
 'use client';
 
 import { useEffect } from 'react';
-import Lenis from '@studio-freight/lenis';
 
-let lenisInstance: Lenis | null = null;
+let targetScroll = 0;
+let currentScroll = 0;
 let rafId: number | null = null;
+let isInitialized = false;
+
+const easeOutCubic = (t: number): number => {
+  return 1 - Math.pow(1 - t, 3);
+};
 
 export default function LenisScroll({ children }: { children: React.ReactNode }) {
   useEffect(() => {
-    // Initialize Lenis only once globally
-    if (lenisInstance) return;
+    // Initialize only once
+    if (isInitialized) return;
+    isInitialized = true;
 
-    lenisInstance = new Lenis({
-      duration: 1.0, // Optimal duration in 0.9-1.1 range
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      direction: 'vertical',
-      gestureDirection: 'vertical',
-      smooth: true,
-      smoothWheel: true, // Enable smooth wheel scrolling
-      mouseMultiplier: 1,
-      smoothTouch: false,
-      touchMultiplier: 2,
-      infinite: false,
-      syncTouch: false,
-    });
+    let lastTime = Date.now();
+    const friction = 0.15; // Smooth scroll friction (0-1, lower = smoother)
 
-    const raf = (time: number) => {
-      lenisInstance?.raf(time);
-      rafId = requestAnimationFrame(raf);
+    const handleWheel = (e: WheelEvent) => {
+      targetScroll += e.deltaY;
+      targetScroll = Math.max(0, Math.min(targetScroll, document.documentElement.scrollHeight - window.innerHeight));
     };
 
-    rafId = requestAnimationFrame(raf);
+    const animate = () => {
+      const now = Date.now();
+      const deltaTime = Math.min(now - lastTime, 16);
+      lastTime = now;
+
+      // Smooth interpolation towards target scroll
+      const diff = targetScroll - currentScroll;
+      const step = diff * friction;
+      currentScroll += step;
+
+      // Apply scroll position
+      window.scrollTo(0, currentScroll);
+
+      rafId = requestAnimationFrame(animate);
+    };
+
+    window.addEventListener('wheel', handleWheel, { passive: true });
+    rafId = requestAnimationFrame(animate);
 
     return () => {
-      if (rafId !== null) {
-        cancelAnimationFrame(rafId);
-      }
-      // Keep Lenis instance to avoid reinit
+      window.removeEventListener('wheel', handleWheel);
+      if (rafId !== null) cancelAnimationFrame(rafId);
+      isInitialized = false;
     };
   }, []);
 
