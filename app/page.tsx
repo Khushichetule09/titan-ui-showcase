@@ -50,15 +50,15 @@ export default function Home() {
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
           <motion.div className="text-2xl font-serif font-bold tracking-tight">
-            Luxé
+            Titan
           </motion.div>
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-12">
             {[
-              { label: 'Services', id: 'services' },
+              { label: 'Collections', id: 'services' },
               { label: 'About', id: 'about' },
-              { label: 'Portfolio', id: 'portfolio' },
+              { label: 'Timepieces', id: 'portfolio' },
               { label: 'Contact', id: 'contact' },
             ].map((link) => (
               <motion.button
@@ -81,7 +81,7 @@ export default function Home() {
               onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#e5c158'}
               onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#d4af37'}
             >
-              Get Started
+              Shop Now
             </Button>
           </motion.div>
 
@@ -107,9 +107,9 @@ export default function Home() {
               exit={{ opacity: 0, height: 0 }}
             >
               {[
-                { label: 'Services', id: 'services' },
+                { label: 'Collections', id: 'services' },
                 { label: 'About', id: 'about' },
-                { label: 'Portfolio', id: 'portfolio' },
+                { label: 'Timepieces', id: 'portfolio' },
                 { label: 'Contact', id: 'contact' },
               ].map((link) => (
                 <motion.button
@@ -127,7 +127,7 @@ export default function Home() {
               onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#e5c158'}
               onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#d4af37'}
             >
-              Get Started
+              Shop Now
             </Button>
             </motion.div>
           )}
@@ -147,7 +147,7 @@ export default function Home() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-            Premium Design & Consulting
+            Precision Timekeeping & Craftsmanship
           </motion.p>
 
           {/* Enhanced Heading with Glow and Underline */}
@@ -158,9 +158,9 @@ export default function Home() {
             transition={{ duration: 1, delay: 0.3 }}
           >
             <h1 className="section-heading" style={{ color: '#f5f1ed' }}>
-              Elevate Your{' '}
+              Timeless{' '}
               <span className="gold-highlight gold-glow-text">
-                Vision
+                Elegance
               </span>
             </h1>
           </motion.div>
@@ -172,7 +172,7 @@ export default function Home() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.5 }}
           >
-            Discover premium design solutions crafted for discerning businesses. Transform your brand with timeless elegance and strategic vision.
+            Experience the pinnacle of watchmaking excellence with Titan. Precision engineering meets timeless design in every timepiece.
           </motion.p>
 
           <motion.div
@@ -188,7 +188,7 @@ export default function Home() {
               whileHover={{ scale: 1.08 }}
               whileTap={{ scale: 0.95 }}
             >
-              Explore Our Work
+              Shop Timepieces
               <ArrowRight size={18} />
             </motion.button>
             <motion.button 
@@ -233,10 +233,10 @@ export default function Home() {
             variants={fadeInUp}
             viewport={{ once: true, margin: '-100px' }}
           >
-            <p className="text-xs sm:text-sm tracking-widest uppercase mb-4" style={{ color: '#d4af37' }}>Our Expertise</p>
-            <h2 className="text-4xl sm:text-5xl font-serif font-bold mb-6">Premium Services</h2>
+            <p className="text-xs sm:text-sm tracking-widest uppercase mb-4" style={{ color: '#d4af37' }}>Our Collections</p>
+            <h2 className="text-4xl sm:text-5xl font-serif font-bold mb-6">Premium Timepieces</h2>
             <p className="text-gray-600 text-lg max-w-2xl mx-auto">
-              Comprehensive solutions designed to elevate your brand presence and create lasting impact.
+              Discover our curated collections of premium watches, wall clocks, and smart timepieces.
             </p>
           </motion.div>
 
@@ -249,16 +249,16 @@ export default function Home() {
           >
             {[
               {
-                title: 'Strategic Design',
-                description: 'Thoughtfully crafted visual identity that captures your brand essence and resonates with your audience.',
+                title: 'Analog Watches',
+                description: 'Precision mechanical movements combined with elegant designs. Swiss-inspired craftsmanship for the discerning collector.',
               },
               {
-                title: 'Brand Consulting',
-                description: 'Expert guidance to establish and refine your brand positioning in the competitive market landscape.',
+                title: 'Wall Clocks',
+                description: 'Sophisticated home decor timepieces that blend functionality with artistic elegance for any interior space.',
               },
               {
-                title: 'Digital Solutions',
-                description: 'Cutting-edge web and digital experiences that blend aesthetics with functionality seamlessly.',
+                title: 'Smart Timepieces',
+                description: 'Modern digital and hybrid watches featuring advanced technology while maintaining timeless aesthetic appeal.',
               },
             ].map((service, index) => (
               <motion.div
@@ -307,7 +307,7 @@ export default function Home() {
             transition={{ delay: 0.2, duration: 0.6 }}
             viewport={{ once: true }}
           >
-            About Us
+            About Titan
           </motion.p>
           <motion.h2 
             className="text-4xl sm:text-5xl font-serif font-bold mb-8"
@@ -316,7 +316,7 @@ export default function Home() {
             transition={{ delay: 0.3, duration: 0.8 }}
             viewport={{ once: true }}
           >
-            Crafted for Excellence
+            Heritage of Excellence
           </motion.h2>
           <motion.p 
             className="text-lg mb-6 leading-relaxed"
@@ -326,7 +326,7 @@ export default function Home() {
             transition={{ delay: 0.4, duration: 0.8 }}
             viewport={{ once: true }}
           >
-            With over a decade of experience, we've helped leading brands establish their presence through innovative design and strategic thinking.
+            Since establishing our legacy of precision timekeeping, Titan has been dedicated to creating watches and clocks that transcend generations.
           </motion.p>
           <motion.p 
             className="text-base leading-relaxed mb-8"
@@ -336,7 +336,7 @@ export default function Home() {
             transition={{ delay: 0.5, duration: 0.8 }}
             viewport={{ once: true }}
           >
-            Our approach combines timeless design principles with modern insights, creating solutions that stand the test of time and resonate with audiences.
+            Every timepiece is a masterpiece of engineering excellence, blending Swiss-inspired craftsmanship with contemporary design sensibilities.
           </motion.p>
           <motion.button
             className="flex items-center gap-2 group font-medium tracking-widest uppercase text-sm rounded-full px-8 py-3 border-2 transition-all"
@@ -348,7 +348,7 @@ export default function Home() {
             transition={{ delay: 0.6, duration: 0.6 }}
             viewport={{ once: true }}
           >
-            Read Our Story
+            Explore Our Heritage
             <ArrowRight size={18} className="group-hover:translate-x-2 transition-transform" />
           </motion.button>
         </motion.div>
@@ -363,7 +363,7 @@ export default function Home() {
         >
           <img
             src="/about-image.jpg"
-            alt="Luxury Design Studio - Our Team and Workspace"
+            alt="Titan Manufacturing Workshop - Precision Craftsmanship"
             className="w-full h-full object-cover"
           />
         </motion.div>
@@ -392,8 +392,8 @@ export default function Home() {
         variants={fadeInUp}
         viewport={{ once: true, margin: '-100px' }}
       >
-        <p className="text-xs sm:text-sm tracking-widest uppercase mb-4" style={{ color: '#d4af37' }}>Featured Work</p>
-        <h2 className="text-4xl sm:text-5xl lg:text-6xl font-serif font-bold">Our Portfolio</h2>
+        <p className="text-xs sm:text-sm tracking-widest uppercase mb-4" style={{ color: '#d4af37' }}>Signature Collections</p>
+        <h2 className="text-4xl sm:text-5xl lg:text-6xl font-serif font-bold">Our Masterpieces</h2>
       </motion.div>
 
       {/* Portfolio Grid - Responsive Layout */}
@@ -405,12 +405,12 @@ export default function Home() {
         viewport={{ once: true, margin: '-100px' }}
       >
         {[
-          { image: '/portfolio-1.jpg', title: 'Luxury Brand Identity', category: 'Branding', span: 'lg:col-span-2' },
-          { image: '/portfolio-2.jpg', title: 'Digital Experience Design', category: 'Web Design' },
-          { image: '/portfolio-3.jpg', title: 'Mobile App Interface', category: 'Product Design' },
-          { image: '/portfolio-4.jpg', title: 'Editorial Campaign', category: 'Marketing' },
-          { image: '/portfolio-5.jpg', title: 'Premium Packaging', category: 'Branding', span: 'md:col-span-2' },
-          { image: '/portfolio-6.jpg', title: 'Corporate Identity', category: 'Consulting' },
+          { image: '/portfolio-1.jpg', title: 'Eternal Collection', category: 'Analog Watches', span: 'lg:col-span-2' },
+          { image: '/portfolio-2.jpg', title: 'Meridian Wall Clock', category: 'Home Decor' },
+          { image: '/portfolio-3.jpg', title: 'Chronicle Smart Watch', category: 'Digital' },
+          { image: '/portfolio-4.jpg', title: 'Prestige Edition Box', category: 'Packaging' },
+          { image: '/portfolio-5.jpg', title: 'Heritage Collection Set', category: 'Watches', span: 'md:col-span-2' },
+          { image: '/portfolio-6.jpg', title: 'Nexus Smart Clock', category: 'Technology' },
         ].map((project, idx) => (
           <motion.div
             key={idx}
@@ -505,10 +505,10 @@ export default function Home() {
             variants={fadeInUp}
             viewport={{ once: true, margin: '-100px' }}
           >
-            <p className="text-xs sm:text-sm tracking-widest uppercase mb-6" style={{ color: '#d4af37' }}>Let's Connect</p>
-            <h2 className="text-4xl sm:text-5xl font-serif font-bold mb-8">Ready to Create Something Extraordinary?</h2>
+            <p className="text-xs sm:text-sm tracking-widest uppercase mb-6" style={{ color: '#d4af37' }}>Get In Touch</p>
+            <h2 className="text-4xl sm:text-5xl font-serif font-bold mb-8">Find Your Perfect Timepiece</h2>
             <p className="text-gray-400 text-lg mb-12 leading-relaxed">
-              Reach out to discuss your project, vision, and how we can elevate your brand to new heights.
+              Reach out to explore our collections, discuss custom orders, or schedule an appointment with our specialists.
             </p>
 
             <motion.form
@@ -535,13 +535,13 @@ export default function Home() {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
-                Get in Touch
+                Contact Us
                 <ArrowRight size={18} />
               </motion.button>
             </motion.form>
 
             <p className="text-gray-500 text-sm mt-8">
-              Or call us directly at <span className="font-medium" style={{ color: '#d4af37' }}>+1 (555) 123-4567</span>
+              Call our concierge at <span className="font-medium" style={{ color: '#d4af37' }}>1-800-TITAN-12</span>
             </p>
           </motion.div>
         </div>
@@ -552,13 +552,13 @@ export default function Home() {
         <div className="max-w-6xl mx-auto">
           <div className="grid grid-cols-1 sm:grid-cols-4 gap-8 mb-12">
             <div>
-              <h3 className="font-serif text-2xl font-bold mb-4">Luxé</h3>
-              <p className="text-gray-500 text-sm">Premium design & consulting for discerning brands.</p>
+              <h3 className="font-serif text-2xl font-bold mb-4">Titan</h3>
+              <p className="text-gray-500 text-sm">Premium timepieces for those who value precision and elegance.</p>
             </div>
             {[
-              { title: 'Services', links: ['Design', 'Consulting', 'Strategy'] },
-              { title: 'Company', links: ['About', 'Team', 'Careers'] },
-              { title: 'Legal', links: ['Privacy', 'Terms', 'Contact'] },
+              { title: 'Collections', links: ['Watches', 'Wall Clocks', 'Smart Timepieces'] },
+              { title: 'Company', links: ['About Titan', 'Craftsmanship', 'Heritage'] },
+              { title: 'Support', links: ['Warranty', 'Service', 'Contact'] },
             ].map((column, index) => (
               <div key={index}>
                 <h4 className="font-medium mb-4 tracking-widest uppercase text-xs">{column.title}</h4>
@@ -576,9 +576,9 @@ export default function Home() {
           </div>
 
           <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4" style={{ borderTop: '1px solid #333333' }}>
-            <p className="text-gray-500 text-sm">© 2024 Luxé Studio. All rights reserved.</p>
+            <p className="text-gray-500 text-sm">© 2024 Titan Watches. All rights reserved. Precision Since Inception.</p>
             <div className="flex gap-6">
-              {['Instagram', 'LinkedIn', 'Twitter'].map((social) => (
+              {['Facebook', 'Instagram', 'YouTube'].map((social) => (
                 <a key={social} href="#" className="text-gray-500 transition-colors text-sm" style={{ color: '#999999' }} onMouseEnter={(e) => e.currentTarget.style.color = '#d4af37'} onMouseLeave={(e) => e.currentTarget.style.color = '#999999'}>
                   {social}
                 </a>
