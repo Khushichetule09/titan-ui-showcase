@@ -298,12 +298,12 @@ export default function Home() {
                 description: 'Mechanical precision with timeless aesthetics. Crafted for those who appreciate true horology.',
               },
               {
-                icon: Home,
+                icon: Clock,
                 title: 'Wall Clocks',
                 description: 'Sophisticated home decor that measures moments. Elevate any space with our elegant designs.',
               },
               {
-                icon: Clock,
+                icon: Watch,
                 title: 'Smart Timepieces',
                 description: 'Modern technology meets classic design. Stay connected without compromising elegance.',
               },
@@ -405,6 +405,7 @@ export default function Home() {
                     alt={product.title}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                     loading="lazy"
+                    decoding="async"
                   />
                   <div
                     className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
@@ -509,6 +510,7 @@ export default function Home() {
                 alt="Titan Craftsmanship"
                 className="w-full h-full object-cover"
                 loading="lazy"
+                decoding="async"
               />
               <div
                 className="absolute inset-0"

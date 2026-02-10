@@ -2,52 +2,55 @@
 
 import { useEffect } from 'react';
 
-let targetScroll = 0;
-let currentScroll = 0;
-let rafId: number | null = null;
-let isInitialized = false;
-
-const easeOutCubic = (t: number): number => {
-  return 1 - Math.pow(1 - t, 3);
-};
-
 export default function LenisScroll({ children }: { children: React.ReactNode }) {
   useEffect(() => {
-    // Initialize only once
-    if (isInitialized) return;
-    isInitialized = true;
+    // Lightweight smooth scroll for preview stability
+    if (typeof window === 'undefined') return;
 
-    let lastTime = Date.now();
-    const friction = 0.15; // Smooth scroll friction (0-1, lower = smoother)
+    let targetScroll = window.scrollY;
+    let currentScroll = window.scrollY;
+    let isAnimating = false;
+    let rafId: number | null = null;
+
+    const friction = 0.1; // 0-1, lower = smoother but slower
+    const minDelta = 0.5; // Threshold to stop animating
 
     const handleWheel = (e: WheelEvent) => {
-      targetScroll += e.deltaY;
-      targetScroll = Math.max(0, Math.min(targetScroll, document.documentElement.scrollHeight - window.innerHeight));
+      targetScroll = Math.max(
+        0,
+        Math.min(targetScroll + e.deltaY, document.documentElement.scrollHeight - window.innerHeight)
+      );
+      isAnimating = true;
     };
 
     const animate = () => {
-      const now = Date.now();
-      const deltaTime = Math.min(now - lastTime, 16);
-      lastTime = now;
-
-      // Smooth interpolation towards target scroll
       const diff = targetScroll - currentScroll;
-      const step = diff * friction;
-      currentScroll += step;
 
-      // Apply scroll position
-      window.scrollTo(0, currentScroll);
+      if (Math.abs(diff) > minDelta) {
+        currentScroll += diff * friction;
+        window.scrollTo(0, currentScroll);
+        rafId = requestAnimationFrame(animate);
+      } else {
+        currentScroll = targetScroll;
+        window.scrollTo(0, currentScroll);
+        isAnimating = false;
+      }
+    };
 
-      rafId = requestAnimationFrame(animate);
+    const handleScroll = () => {
+      if (!isAnimating) {
+        targetScroll = window.scrollY;
+        currentScroll = window.scrollY;
+      }
     };
 
     window.addEventListener('wheel', handleWheel, { passive: true });
-    rafId = requestAnimationFrame(animate);
+    window.addEventListener('scroll', handleScroll, { passive: true });
 
     return () => {
       window.removeEventListener('wheel', handleWheel);
+      window.removeEventListener('scroll', handleScroll);
       if (rafId !== null) cancelAnimationFrame(rafId);
-      isInitialized = false;
     };
   }, []);
 
