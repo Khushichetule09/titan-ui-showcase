@@ -1,9 +1,11 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Menu, X, ArrowRight, Clock, Watch } from 'lucide-react';
+import { Menu, X, ArrowRight, Clock, Watch, ShoppingCart } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
+import Link from 'next/link';
+import { useCart } from '@/app/context/CartContext';
 
 const fadeInUp = {
   hidden: { opacity: 0, y: 40 },
@@ -21,6 +23,8 @@ const staggerContainer = {
 export default function Home() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const { items, addToCart } = useCart();
+  const cartItemsCount = items.reduce((acc, item) => acc + item.quantity, 0);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -44,14 +48,13 @@ export default function Home() {
   ];
 
   return (
-    <div className="w-full overflow-x-hidden bg-black" style={{ color: '#f5f1ed' }}>
+    <div className="w-full overflow-x-hidden bg-black" style={{ color: '#ffdbfd' }}>
       {/* Premium Sticky Navigation */}
       <motion.nav
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-          scrolled 
-            ? 'bg-black/95 backdrop-blur-lg border-b' 
-            : 'bg-transparent'
-        }`}
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled
+          ? 'bg-black/95 backdrop-blur-lg border-b'
+          : 'bg-transparent'
+          }`}
         style={{ borderColor: scrolled ? '#333333' : 'transparent' }}
         initial={{ y: -100 }}
         animate={{ y: 0 }}
@@ -60,15 +63,15 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between py-4 lg:py-5">
             {/* Logo */}
-            <motion.div 
+            <motion.div
               className="flex items-center gap-3"
               whileHover={{ scale: 1.02 }}
             >
-              <div 
+              <div
                 className="w-10 h-10 rounded-full flex items-center justify-center"
-                style={{ 
-                  background: 'linear-gradient(135deg, #d4af37 0%, #f5f1ed 100%)',
-                  boxShadow: '0 4px 15px rgba(212, 175, 55, 0.2)'
+                style={{
+                  background: 'linear-gradient(135deg, #6367ff 0%, #ffdbfd 100%)',
+                  boxShadow: '0 4px 15px rgba(99, 103, 255, 0.2)'
                 }}
               >
                 <Watch size={20} style={{ color: '#1a1a1a' }} />
@@ -83,44 +86,54 @@ export default function Home() {
                   key={link.id}
                   onClick={() => scrollToSection(link.id)}
                   className="text-sm tracking-widest uppercase transition-colors relative group py-2"
-                  style={{ color: '#f5f1ed' }}
+                  style={{ color: '#ffdbfd' }}
                   whileHover={{ y: -1 }}
                 >
                   {link.label}
-                  <span 
+                  <span
                     className="absolute bottom-0 left-0 w-0 h-0.5 group-hover:w-full transition-all duration-300"
-                    style={{ backgroundColor: '#d4af37' }}
+                    style={{ backgroundColor: '#6367ff' }}
                   />
                 </motion.button>
               ))}
             </div>
 
             {/* CTA Button */}
-            <motion.div className="hidden sm:block" whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-              <Button 
-                className="font-medium tracking-widest uppercase text-xs px-6 py-2.5 h-auto border-0 rounded-full transition-all duration-300"
-                style={{ 
-                  backgroundColor: '#d4af37', 
-                  color: '#000000',
-                  boxShadow: '0 4px 15px rgba(212, 175, 55, 0.25)'
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.backgroundColor = '#e5c158';
-                  e.currentTarget.style.boxShadow = '0 6px 20px rgba(212, 175, 55, 0.35)';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.backgroundColor = '#d4af37';
-                  e.currentTarget.style.boxShadow = '0 4px 15px rgba(212, 175, 55, 0.25)';
-                }}
-              >
-                Shop Now
-              </Button>
-            </motion.div>
+            <div className="hidden sm:flex items-center gap-6">
+              <Link href="/cart" className="relative group flex items-center justify-center">
+                <ShoppingCart size={22} style={{ color: '#ffdbfd' }} className="transition-colors group-hover:text-[#6367ff]" />
+                {cartItemsCount > 0 && (
+                  <span className="absolute -top-2 -right-2 bg-[#6367ff] text-[#000000] text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center">
+                    {cartItemsCount}
+                  </span>
+                )}
+              </Link>
+              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                <Button
+                  className="font-medium tracking-widest uppercase text-xs px-6 py-2.5 h-auto border-0 rounded-full transition-all duration-300"
+                  style={{
+                    backgroundColor: '#6367ff',
+                    color: '#000000',
+                    boxShadow: '0 4px 15px rgba(99, 103, 255, 0.25)'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.backgroundColor = '#8494ff';
+                    e.currentTarget.style.boxShadow = '0 6px 20px rgba(99, 103, 255, 0.35)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.backgroundColor = '#6367ff';
+                    e.currentTarget.style.boxShadow = '0 4px 15px rgba(99, 103, 255, 0.25)';
+                  }}
+                >
+                  Shop Now
+                </Button>
+              </motion.div>
+            </div>
 
             {/* Mobile Menu Button */}
             <motion.button
               className="lg:hidden p-2"
-              style={{ color: '#f5f1ed' }}
+              style={{ color: '#ffdbfd' }}
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               whileTap={{ scale: 0.95 }}
             >
@@ -145,18 +158,20 @@ export default function Home() {
                       key={link.id}
                       onClick={() => scrollToSection(link.id)}
                       className="block w-full text-left px-4 py-3 text-sm tracking-widest uppercase rounded-lg transition-colors"
-                      style={{ color: '#f5f1ed' }}
+                      style={{ color: '#ffdbfd' }}
                       whileHover={{ backgroundColor: '#333333' }}
                     >
                       {link.label}
                     </motion.button>
                   ))}
-                  <Button 
-                    className="w-full mt-4 font-medium tracking-widest uppercase text-xs py-2.5 h-auto border-0 rounded-full"
-                    style={{ backgroundColor: '#d4af37', color: '#000000' }}
-                  >
-                    Shop Now
-                  </Button>
+                  <Link href="/cart" className="w-full flex">
+                    <Button
+                      className="w-full mt-4 font-medium tracking-widest uppercase text-xs py-2.5 h-auto border-0 rounded-full flex items-center justify-center gap-2"
+                      style={{ backgroundColor: '#6367ff', color: '#000000' }}
+                    >
+                      <ShoppingCart size={16} /> Cart ({cartItemsCount})
+                    </Button>
+                  </Link>
                 </div>
               </motion.div>
             )}
@@ -165,19 +180,29 @@ export default function Home() {
       </motion.nav>
 
       {/* Hero Section */}
-      <section className="relative w-full min-h-screen flex items-center justify-center pt-20 overflow-hidden">
+      <section
+        className="relative w-full h-[100vh] flex items-center justify-center pt-20 overflow-hidden"
+        style={{
+          backgroundImage: 'linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("/night-sky-bg.png")',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+          width: '100%',
+          height: '100vh'
+        }}
+      >
         {/* Background Elements */}
-        <div 
+        <div
           className="absolute inset-0 opacity-30"
           style={{
-            background: 'radial-gradient(ellipse at center, rgba(212, 175, 55, 0.1) 0%, transparent 70%)',
+            background: 'radial-gradient(ellipse at center, rgba(99, 103, 255, 0.1) 0%, transparent 70%)',
           }}
         />
 
         <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-32 text-center">
           <motion.p
             className="text-xs sm:text-sm tracking-widest uppercase mb-6"
-            style={{ color: '#d4af37' }}
+            style={{ color: '#6367ff' }}
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
@@ -187,20 +212,20 @@ export default function Home() {
 
           <motion.h1
             className="text-5xl sm:text-6xl lg:text-7xl font-serif font-bold mb-8 leading-tight"
-            style={{ color: '#f5f1ed' }}
+            style={{ color: '#ffdbfd' }}
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
             Timeless
             <br />
-            <span style={{ color: '#d4af37' }}>Elegance</span>
+            <span style={{ color: '#6367ff' }}>Elegance</span>
             {' '}Crafted
           </motion.h1>
 
           <motion.p
             className="text-lg sm:text-xl mb-12 max-w-2xl mx-auto leading-relaxed"
-            style={{ color: '#999999' }}
+            style={{ color: '#c9beff' }}
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.3 }}
@@ -214,20 +239,20 @@ export default function Home() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
           >
-            <Button 
+            <Button
               className="px-8 py-3 h-auto border-0 rounded-full font-medium tracking-widest uppercase text-sm transition-all"
-              style={{ 
-                backgroundColor: '#d4af37', 
+              style={{
+                backgroundColor: '#6367ff',
                 color: '#000000',
-                boxShadow: '0 4px 20px rgba(212, 175, 55, 0.3)'
+                boxShadow: '0 4px 20px rgba(99, 103, 255, 0.3)'
               }}
               onMouseEnter={(e) => {
                 e.currentTarget.style.transform = 'translateY(-2px)';
-                e.currentTarget.style.boxShadow = '0 8px 30px rgba(212, 175, 55, 0.4)';
+                e.currentTarget.style.boxShadow = '0 8px 30px rgba(99, 103, 255, 0.4)';
               }}
               onMouseLeave={(e) => {
                 e.currentTarget.style.transform = 'translateY(0)';
-                e.currentTarget.style.boxShadow = '0 4px 20px rgba(212, 175, 55, 0.3)';
+                e.currentTarget.style.boxShadow = '0 4px 20px rgba(99, 103, 255, 0.3)';
               }}
             >
               Explore Collections
@@ -235,8 +260,8 @@ export default function Home() {
             <motion.button
               onClick={() => scrollToSection('showcase')}
               className="flex items-center gap-2 px-8 py-3 border-2 rounded-full font-medium tracking-widest uppercase text-sm transition-all group"
-              style={{ borderColor: '#d4af37', color: '#d4af37' }}
-              whileHover={{ backgroundColor: '#d4af37', color: '#000000' }}
+              style={{ borderColor: '#6367ff', color: '#6367ff' }}
+              whileHover={{ backgroundColor: '#6367ff', color: '#000000' }}
             >
               View Showcase
               <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
@@ -250,13 +275,13 @@ export default function Home() {
           animate={{ y: [0, 10, 0] }}
           transition={{ duration: 2, repeat: Infinity }}
         >
-          <div 
+          <div
             className="w-6 h-10 border-2 rounded-full flex items-center justify-center"
-            style={{ borderColor: '#d4af37' }}
+            style={{ borderColor: '#6367ff' }}
           >
-            <div 
+            <div
               className="w-1 h-2 rounded-full animate-pulse"
-              style={{ backgroundColor: '#d4af37' }}
+              style={{ backgroundColor: '#6367ff' }}
             />
           </div>
         </motion.div>
@@ -272,7 +297,7 @@ export default function Home() {
             variants={fadeInUp}
             viewport={{ once: true, margin: '-100px' }}
           >
-            <p className="text-xs sm:text-sm tracking-widest uppercase mb-4" style={{ color: '#d4af37' }}>
+            <p className="text-xs sm:text-sm tracking-widest uppercase mb-4" style={{ color: '#6367ff' }}>
               Our Collections
             </p>
             <h2 className="text-4xl sm:text-5xl lg:text-6xl font-serif font-bold mb-6">
@@ -320,24 +345,24 @@ export default function Home() {
                   }}
                   variants={fadeInUp}
                   whileHover={{
-                    border: '1px solid #d4af37',
-                    boxShadow: '0 20px 40px rgba(212, 175, 55, 0.15)',
+                    border: '1px solid #6367ff',
+                    boxShadow: '0 20px 40px rgba(99, 103, 255, 0.15)',
                     y: -5,
                   }}
                 >
                   <div
                     className="w-14 h-14 rounded-full flex items-center justify-center mb-6 transition-all"
-                    style={{ 
+                    style={{
                       backgroundColor: '#2a2a2a',
-                      color: '#d4af37',
+                      color: '#6367ff',
                     }}
                     onMouseEnter={(e) => {
-                      e.currentTarget.style.backgroundColor = '#d4af37';
+                      e.currentTarget.style.backgroundColor = '#6367ff';
                       e.currentTarget.style.color = '#1a1a1a';
                     }}
                     onMouseLeave={(e) => {
                       e.currentTarget.style.backgroundColor = '#2a2a2a';
-                      e.currentTarget.style.color = '#d4af37';
+                      e.currentTarget.style.color = '#6367ff';
                     }}
                   >
                     <IconComponent size={24} />
@@ -346,7 +371,7 @@ export default function Home() {
                   <p className="text-gray-400 text-sm leading-relaxed mb-6">{collection.description}</p>
                   <motion.button
                     className="flex items-center gap-2 text-sm font-medium tracking-widest uppercase transition-colors"
-                    style={{ color: '#d4af37' }}
+                    style={{ color: '#6367ff' }}
                     whileHover={{ gap: '8px' }}
                   >
                     Explore <ArrowRight size={14} />
@@ -368,7 +393,7 @@ export default function Home() {
             variants={fadeInUp}
             viewport={{ once: true, margin: '-100px' }}
           >
-            <p className="text-xs sm:text-sm tracking-widest uppercase mb-4" style={{ color: '#d4af37' }}>
+            <p className="text-xs sm:text-sm tracking-widest uppercase mb-4" style={{ color: '#6367ff' }}>
               Featured Pieces
             </p>
             <h2 className="text-4xl sm:text-5xl lg:text-6xl font-serif font-bold">
@@ -385,12 +410,12 @@ export default function Home() {
             viewport={{ once: true, margin: '-100px' }}
           >
             {[
-              { image: '/portfolio-1.jpg', title: 'Eternal Chronograph', price: '$2,499' },
-              { image: '/portfolio-2.jpg', title: 'Meridian Wall Piece', price: '$899' },
-              { image: '/portfolio-3.jpg', title: 'Chronicle Smart', price: '$1,299' },
-              { image: '/portfolio-4.jpg', title: 'Prestige Edition', price: '$3,499' },
-              { image: '/portfolio-5.jpg', title: 'Heritage Set', price: '$4,999' },
-              { image: '/portfolio-6.jpg', title: 'Nexus Smart Clock', price: '$699' },
+              { id: 'p1', image: '/portfolio-1.jpg', title: 'Eternal Chronograph', price: '$2,499' },
+              { id: 'p2', image: '/portfolio-2.jpg', title: 'Meridian Wall Piece', price: '$899' },
+              { id: 'p3', image: '/portfolio-3.jpg', title: 'Chronicle Smart', price: '$1,299' },
+              { id: 'p4', image: '/portfolio-4.jpg', title: 'Prestige Edition', price: '$3,499' },
+              { id: 'p5', image: '/portfolio-5.jpg', title: 'Heritage Set', price: '$4,999' },
+              { id: 'p6', image: '/portfolio-6.jpg', title: 'Nexus Smart Clock', price: '$699' },
             ].map((product, idx) => (
               <motion.div
                 key={idx}
@@ -410,7 +435,7 @@ export default function Home() {
                   <div
                     className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                     style={{
-                      background: 'linear-gradient(135deg, rgba(212, 175, 55, 0.2) 0%, transparent 50%)',
+                      background: 'linear-gradient(135deg, rgba(99, 103, 255, 0.2) 0%, transparent 50%)',
                     }}
                   />
                 </div>
@@ -424,15 +449,21 @@ export default function Home() {
                 >
                   <h3 className="text-lg font-serif font-bold mb-2">{product.title}</h3>
                   <div className="flex items-center justify-between">
-                    <span style={{ color: '#d4af37' }} className="font-medium">
+                    <span style={{ color: '#6367ff' }} className="font-medium">
                       {product.price}
                     </span>
                     <motion.button
                       className="flex items-center gap-2 text-xs font-medium tracking-widest uppercase transition-colors"
-                      style={{ color: '#d4af37' }}
+                      style={{ color: '#6367ff' }}
                       whileHover={{ gap: '6px' }}
+                      onClick={() => addToCart({
+                        id: product.id,
+                        image: product.image,
+                        title: product.title,
+                        price: parseInt(product.price.replace(/[^0-9]/g, ''))
+                      })}
                     >
-                      View <ArrowRight size={12} />
+                      Add to Cart <ShoppingCart size={12} />
                     </motion.button>
                   </div>
                 </motion.div>
@@ -455,7 +486,7 @@ export default function Home() {
             >
               <motion.p
                 className="text-xs sm:text-sm tracking-widest uppercase mb-4"
-                style={{ color: '#d4af37' }}
+                style={{ color: '#6367ff' }}
                 variants={fadeInUp}
               >
                 Our Heritage
@@ -484,11 +515,11 @@ export default function Home() {
                   <motion.div key={idx} className="flex items-center gap-4" variants={fadeInUp}>
                     <div
                       className="w-2 h-2 rounded-full"
-                      style={{ backgroundColor: '#d4af37' }}
+                      style={{ backgroundColor: '#6367ff' }}
                     />
                     <div>
                       <p className="text-sm font-medium text-gray-300">{stat.label}</p>
-                      <p style={{ color: '#d4af37' }} className="text-xl font-bold">
+                      <p style={{ color: '#6367ff' }} className="text-xl font-bold">
                         {stat.value}
                       </p>
                     </div>
@@ -515,7 +546,7 @@ export default function Home() {
               <div
                 className="absolute inset-0"
                 style={{
-                  background: 'linear-gradient(135deg, rgba(212, 175, 55, 0.1) 0%, transparent 50%)',
+                  background: 'linear-gradient(135deg, rgba(99, 103, 255, 0.1) 0%, transparent 50%)',
                 }}
               />
             </motion.div>
@@ -554,8 +585,8 @@ export default function Home() {
               >
                 <div
                   className="w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-6"
-                  style={{ 
-                    backgroundColor: '#d4af37',
+                  style={{
+                    backgroundColor: '#6367ff',
                     color: '#1a1a1a',
                   }}
                 >
@@ -580,7 +611,7 @@ export default function Home() {
           >
             <motion.p
               className="text-xs sm:text-sm tracking-widest uppercase mb-6"
-              style={{ color: '#d4af37' }}
+              style={{ color: '#6367ff' }}
               variants={fadeInUp}
             >
               Ready to Own Elegance
@@ -601,10 +632,10 @@ export default function Home() {
               className="flex flex-col sm:flex-row gap-4 justify-center items-center"
               variants={fadeInUp}
             >
-              <Button 
+              <Button
                 className="px-8 py-3 h-auto border-0 rounded-full font-medium tracking-widest uppercase text-sm transition-all"
-                style={{ 
-                  backgroundColor: '#d4af37', 
+                style={{
+                  backgroundColor: '#6367ff',
                   color: '#000000',
                 }}
               >
@@ -613,8 +644,8 @@ export default function Home() {
               <motion.button
                 onClick={() => scrollToSection('contact')}
                 className="flex items-center gap-2 px-8 py-3 border-2 rounded-full font-medium tracking-widest uppercase text-sm group"
-                style={{ borderColor: '#d4af37', color: '#d4af37' }}
-                whileHover={{ backgroundColor: '#d4af37', color: '#000000' }}
+                style={{ borderColor: '#6367ff', color: '#6367ff' }}
+                whileHover={{ backgroundColor: '#6367ff', color: '#000000' }}
               >
                 Contact Us
                 <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
@@ -635,7 +666,7 @@ export default function Home() {
               viewport={{ once: true }}
             >
               <h3 className="font-serif text-xl font-bold mb-4 flex items-center gap-2">
-                <Watch size={20} style={{ color: '#d4af37' }} />
+                <Watch size={20} style={{ color: '#6367ff' }} />
                 TITAN
               </h3>
               <p className="text-gray-400 text-sm leading-relaxed">

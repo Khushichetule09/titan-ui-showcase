@@ -1,12 +1,13 @@
 import React from "react"
 import type { Metadata, Viewport } from 'next'
-import { Playfair_Display, Inter } from 'next/font/google'
+import { Caveat_Brush, Outfit } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import './globals.css'
 import LenisScroll from '@/components/lenis-scroll'
+import { CartProvider } from '@/app/context/CartContext'
 
-const playfair = Playfair_Display({ subsets: ["latin"], weight: ['400', '600', '700'] });
-const inter = Inter({ subsets: ["latin"] });
+const caveatBrush = Caveat_Brush({ subsets: ["latin"], weight: ['400'] });
+const outfit = Outfit({ subsets: ["latin"], weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'] });
 
 export const metadata: Metadata = {
   title: 'Titan - Timeless Elegance & Craftsmanship',
@@ -26,10 +27,12 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" style={{ fontFamily: `${inter.style.fontFamily}, sans-serif` }} className="scroll-smooth-custom">
-      <body className={`${inter.className} bg-black text-cream antialiased min-h-screen`} style={{ '--font-serif': playfair.style.fontFamily } as React.CSSProperties}>
+    <html lang="en" style={{ fontFamily: `${outfit.style.fontFamily}, sans-serif` }} className="scroll-smooth-custom">
+      <body className={`${outfit.className} bg-black text-cream antialiased min-h-screen`} style={{ '--font-serif': caveatBrush.style.fontFamily } as React.CSSProperties}>
         <LenisScroll>
-          {children}
+          <CartProvider>
+            {children}
+          </CartProvider>
         </LenisScroll>
         <Analytics />
       </body>
